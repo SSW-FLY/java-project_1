@@ -18,4 +18,10 @@
         values
          (#{setmealId},#{checkgroupId});
     </insert>
+    <select id="findByCondition" resultType="itcode.pojo.Setmeal">
+        select * from t_setmeal
+        <if test="queryString != null and queryString.length > 0">
+            where code = #{queryString} or name=#{queryString} or helpCode=#{queryString}
+        </if>
+    </select>
 </mapper>
