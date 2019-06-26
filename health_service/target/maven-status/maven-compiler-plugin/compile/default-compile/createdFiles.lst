@@ -1,3 +1,4 @@
 itcode\service\HelloServiceImpl.class
-itcode\service\CheckGroupServiceImpl.class
 itcode\service\CheckItemServiceImpl.class
+itcode\service\SetMealServieceImpl.class
+itcode\service\CheckGroupServiceImpl.class

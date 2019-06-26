@@ -32,7 +32,10 @@
                 <bean class="com.github.pagehelper.PageInterceptor">
                     <property name="properties">
                         <value>
-                            <!-- 设置数据库类型oracle,mysql,mariadb,sqlite,hsqldb,postgresql,db2,sqlserver,informix,h2,sqlserver2012,derby-->
+                            <!-- 设置数据库类型oracle,mysql,
+                            mariadb,sqlite,hsqldb,postgresql,
+                            db2,sqlserver,informix,h2,sqlserver2012,
+                            derby-->
                             helperDialect=mysql
                         </value>
                     </property>

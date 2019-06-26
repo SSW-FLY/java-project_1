@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--映射文件的作用：用来存放sql语句
+    namespace:命名空间
+-->
+<mapper namespace="itcode.dao.SetMealDao">
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into t_setmeal (name,code,helpCode,sex,age,price,remark,attention,img)
+        values
+        (#{name},#{code},#{helpCode},#{sex},#{age},#{price},#{remark},#{attention},#{img});
+    </insert>
+    <insert id="setSetmealAndCheckGroup">
+        insert into  t_setmeal_checkgroup (setmeal_id,checkgroup_id)
+        values
+         (#{setmealId},#{checkgroupId});
+    </insert>
+</mapper>

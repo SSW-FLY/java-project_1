@@ -1,3 +1,4 @@
 itcode\controller\CheckItemController.class
 itcode\controller\HelloController.class
 itcode\controller\CheckGroupController.class
+itcode\controller\SetMealController.class
