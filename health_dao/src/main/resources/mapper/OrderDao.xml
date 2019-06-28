@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--映射文件的作用：用来存放sql语句
+    namespace:命名空间
+-->
+
+<!--更新预约表-->
+<mapper namespace="itcode.dao.OrderDao">
+    <insert id="addNumberByDate">
+        insert into t_ordersetting (orderDate,number) values (#{orderDate},#{number})
+    </insert>
+    <insert id="add">
+        insert into t_ordersetting (orderDate,number) values (#{date},#{num})
+    </insert>
+    <update id="updateNumberByDate">
+        update t_ordersetting set number = #{number} where orderDate=#{orderDate}
+    </update>
+
+<!--查询当日记录-->
+    <select id="findOrderByDate" resultType="java.lang.Integer">
+        select count(*) from t_ordersetting where orderDate=#{orderDate}
+    </select>
+    <select id="getOrderSettingByMonth" resultType="itcode.pojo.OrderSetting">
+        select * from t_ordersetting where orderDate between #{begainData} and #{endData}
+    </select>
+    <select id="findOrderByDate1" resultType="itcode.pojo.OrderSetting">
+        select * from t_ordersetting where  orderDate = #{orderDate}
+    </select>
+</mapper>

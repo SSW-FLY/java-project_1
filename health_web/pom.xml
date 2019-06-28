@@ -7,9 +7,8 @@
         <groupId>itcode</groupId>
         <version>v1.0</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-
     <groupId>itcode</groupId>
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>health_web</artifactId>
     <version>v1.0</version>
     <packaging>war</packaging>
