@@ -24,4 +24,27 @@
             where code = #{queryString} or name=#{queryString} or helpCode=#{queryString}
         </if>
     </select>
+
+    <select id="findAllMeal" resultType="itcode.pojo.Setmeal">
+        select * from t_setmeal
+    </select>
+
+    <select id="findSetmealById" resultType="itcode.pojo.Setmeal">
+        select * from t_setmeal where id = #{setMealId};
+    </select>
+
+    <select id="findCheckGroupById" resultType="itcode.pojo.CheckGroup">
+        select * from t_checkgroup where id in (select checkgroup_id from t_setmeal_checkgroup where setmeal_id = #{setMealId});
+    </select>
+    <select id="findCheckItemBy" resultType="itcode.pojo.CheckItem">
+        select * from t_checkitem where id in (select checkitem_id from t_checkgroup_checkitem where checkgroup_id = #{checkgroupId});
+    </select>
+
+    <!-- 批量查找-->
+<!--    <select id="findCheckItemByCheckgroupIds" resultType="itcode.pojo.CheckItem">-->
+<!--        select * from t_checkitem where id in-->
+<!--        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">-->
+<!--            #{item}-->
+<!--        </foreach>-->
+<!--    </select>-->
 </mapper>

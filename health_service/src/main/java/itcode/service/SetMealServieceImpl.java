@@ -6,10 +6,15 @@ import com.github.pagehelper.PageHelper;
 import itcode.common.RedisConstant;
 import itcode.dao.SetMealDao;
 import itcode.entity.PageResult;
+import itcode.pojo.CheckGroup;
+import itcode.pojo.CheckItem;
 import itcode.pojo.Setmeal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.JedisPool;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service(interfaceClass = SetMealServiece.class)
 @Transactional
@@ -34,6 +39,40 @@ public class SetMealServieceImpl implements SetMealServiece {
         Page<Setmeal> page = setMealDao.findByCondition(queryString);
 
         return new PageResult(page.getTotal(),page.getResult());
+    }
+
+    @Override
+    public List<Setmeal> getSetmeal() {
+        List<Setmeal> setmeals = setMealDao.findAllMeal();
+        return setmeals;
+    }
+
+    @Override
+    public Setmeal findById(Integer id) {
+        //setmeal包括多个checkgroup,一个checkgroup包括多个checkitem
+        //先查出基本信息
+        Setmeal setmeal = setMealDao.findSetmealById(id);
+        //查checkgroup信息,通过中间表
+        List<CheckGroup> checkGroups = setMealDao.findCheckGroupById(id);
+        //查checkitem信息
+        List<Integer> checkGroupIds = new ArrayList<>();
+        for (CheckGroup checkGroup : checkGroups) {
+
+            List<CheckItem> checkItems = setMealDao.findCheckItemBy(checkGroup.getId());
+            checkGroup.setCheckItems(checkItems);
+
+//            //获取checkgroupId集合
+//            checkGroupIds.add(checkGroup.getId());
+
+        }
+
+//        List<CheckItem> checkItems = setMealDao.findCheckItemByCheckgroupIds(checkGroupIds);
+//        for (CheckItem checkItem : checkItems) {
+//            System.out.println(checkItem.toString());
+//        }
+
+        setmeal.setCheckGroups(checkGroups);
+        return setmeal;
     }
 
     private void setSetmealAndCheckGroup(Integer setMealId,Integer[] checkgroupIds) {
