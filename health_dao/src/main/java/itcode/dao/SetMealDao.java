@@ -23,5 +23,5 @@ public interface SetMealDao {
 
     List<CheckItem> findCheckItemBy(@Param("checkgroupId") Integer id);
 
-    List<CheckItem> findCheckItemByCheckgroupIds(List<Integer> checkGroupIds);
+//    List<CheckItem> findCheckItemByCheckgroupIds(List<Integer> checkGroupIds);
 }
