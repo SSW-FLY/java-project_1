@@ -29,16 +29,16 @@ public class SetMealServieceImpl implements SetMealServiece {
     @Override
     public void add(Setmeal setmeal, Integer[] checkgroupIds) {
         setMealDao.add(setmeal);
-        setSetmealAndCheckGroup(setmeal.getId(),checkgroupIds);
+        setSetmealAndCheckGroup(setmeal.getId(), checkgroupIds);
         savePic2Redis(setmeal.getImg());
     }
 
     @Override
     public PageResult findpage(Integer currentPage, Integer pageSize, String queryString) {
-        PageHelper.startPage(currentPage,pageSize);
+        PageHelper.startPage(currentPage, pageSize);
         Page<Setmeal> page = setMealDao.findByCondition(queryString);
 
-        return new PageResult(page.getTotal(),page.getResult());
+        return new PageResult(page.getTotal(), page.getResult());
     }
 
     @Override
@@ -48,7 +48,7 @@ public class SetMealServieceImpl implements SetMealServiece {
     }
 
     @Override
-/*    public Setmeal findById(Integer id) {
+    public Setmeal findById(Integer id) {
         //setmeal包括多个checkgroup,一个checkgroup包括多个checkitem
         //先查出基本信息
         Setmeal setmeal = setMealDao.findSetmealById(id);
@@ -62,23 +62,18 @@ public class SetMealServieceImpl implements SetMealServiece {
         }
         setmeal.setCheckGroups(checkGroups);
         return setmeal;
-    }*/
-
-    public Setmeal findById(Integer id){
-        //根基id查出基本信息
-        Setmeal setmeal = setMealDao.findSetmealById(id);
     }
 
-    private void setSetmealAndCheckGroup(Integer setMealId,Integer[] checkgroupIds) {
-        if (checkgroupIds !=null&& checkgroupIds.length>0){
+    private void setSetmealAndCheckGroup(Integer setMealId, Integer[] checkgroupIds) {
+        if (checkgroupIds != null && checkgroupIds.length > 0) {
             for (Integer id : checkgroupIds) {
-                setMealDao.setSetmealAndCheckGroup(setMealId,id);
+                setMealDao.setSetmealAndCheckGroup(setMealId, id);
             }
         }
     }
 
     //将保存到数据库的图片放到redis中
-    private void savePic2Redis(String pic){
-        jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES,pic);
+    private void savePic2Redis(String pic) {
+        jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES, pic);
     }
 }

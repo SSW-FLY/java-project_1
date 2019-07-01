@@ -33,7 +33,7 @@
             <div class="contentBox">
                 <div class="card">
                     <div class="">
-                        <img :src="'http://pqjroc654.bkt.clouddn.com/'+setmeal.img" width="100%" height="100%" />
+                        <img :src="'http://ptp4pcnqe.bkt.clouddn.com/'+setmeal.img" width="100%" height="100%" />
                     </div>
                     <div class="project-text">
                         <h4 class="tit">{{setmeal.name}}</h4>
@@ -123,6 +123,8 @@
                             if(!response.data.flag){
                                 //验证码发送失败
                                 this.$message.error('验证码发送失败，请检查手机号输入是否正确');
+                            }else {
+                                this.$message.success("验证码发送成功")
                             }
                         });
                     },

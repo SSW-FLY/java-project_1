@@ -19,7 +19,11 @@
         update t_ordersetting set number = #{number} where orderDate=#{orderDate}
     </update>
 
-<!--查询当日记录-->
+    <update id="editReservationsByOrderDate">
+        update t_ordersetting set reservations = #{reservations} where orderDate = #{orderDate}
+    </update>
+
+    <!--查询当日记录-->
     <select id="findOrderByDate" resultType="java.lang.Integer">
         select count(*) from t_ordersetting where orderDate=#{orderDate}
     </select>

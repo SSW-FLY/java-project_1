@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--映射文件的作用：用来存放sql语句
+    namespace:命名空间
+-->
+<mapper namespace="itcode.dao.OrdersDao">
+    <insert id="add">
+        insert into t_order
+            (member_id,orderDate,orderType,orderStatus,setmeal_id)
+            values
+            (#{memberId},#{orderDate},#{orderType},#{orderStatus},#{setmealId}) ;
+    </insert>
+
+    <select id="findOrderByCondition" resultType="itcode.pojo.Order">
+        select * from t_order
+        <where>
+            <if test="memberId != null">
+                member_id = #{memberId}
+            </if>
+            <if test="orderDate != null">
+                and orderDate=#{orderDate}
+            </if>
+            <if test="setmealId != null">
+                and setmeal_id = #{setmealId}
+            </if>
+        </where>
+    </select>
+</mapper>

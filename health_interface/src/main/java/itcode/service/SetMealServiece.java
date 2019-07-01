@@ -13,4 +13,6 @@ public interface SetMealServiece {
     List<Setmeal> getSetmeal();
 
     Setmeal findById(Integer id);
+
+//    Setmeal findById1(Integer id);
 }

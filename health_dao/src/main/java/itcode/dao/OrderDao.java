@@ -18,4 +18,6 @@ public interface OrderDao {
     void add(@Param("date")String date,@Param("num") String num);
 
     OrderSetting findOrderByDate1(@Param("orderDate")Date orderDate);
+
+    int editReservationsByOrderDate(OrderSetting orderSetting);
 }
