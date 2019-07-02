@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc.xsd
+						http://code.alibabatech.com/schema/dubbo
+						http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+    <!--不用权限就可访问-->
+    <security:http pattern="/login.html" security="none"/>
+    <security:http pattern="/error.html" security="none"/>
+
+    <!--设置哪些权限可以访问-->
+    <!--下面设置用户具有什么样的权限-->
+
+    <security:http auto-config="true" use-expressions="true">
+
+
+        <!--拥有add权限就可以访问add.html-->
+        <security:intercept-url pattern="/add.html" access="hasAnyAuthority('add')"/>
+
+        <security:intercept-url pattern="/*" access="hasRole('ROLE_ADMIN')"/>
+        <!--自定义登录表单-->
+        <security:form-login login-page="/login.html"
+                             username-parameter="username"
+                             password-parameter="password"
+                             login-processing-url="/login.do"
+                             default-target-url="/index.html"
+                             authentication-failure-url="/login.html"/>
+        <!--禁用csrf-->
+        <security:csrf disabled="true"/>
+
+
+        <!--
+            logout：退出登录
+            logout-url：退出登录操作对应的请求路径
+            logout-success-url:退出登录后的跳转页面
+            invalidate-session:销毁session
+        -->
+        <security:logout logout-url="/logout.do"
+                         logout-success-url="/login.html"
+                         invalidate-session="true"/>
+
+        <!--设置拦截，并指定哪种权限可以通过验证-->
+
+    </security:http>
+
+
+    <!--权限管理器，管理多个权限服务提供者-->
+    <security:authentication-manager>
+
+        <!--权限服务提供者，管理多个服务-->
+        <security:authentication-provider>
+            <!--权限服务提供者，指定用户名，用户密码，以及用户的权限-->
+            <security:user-service>
+                <security:user name="admin" password="{noop}admin" authorities="ROLE_ADMIN"/>
+                <security:user name="yc" password="{noop}yc" authorities="add"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+</beans>

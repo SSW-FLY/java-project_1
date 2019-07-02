@@ -60,6 +60,10 @@ public class OrderServiceImpl implements OrderService {
         //b.通过时间查询预约设置
         OrderSetting orderSetting = orderSettingDao.findOrderByDate1(orderDate);
 
+        if(null ==orderSetting){
+            return new Result(false,MessageConstant.SELECTED_DATE_CANNOT_ORDER);
+        }
+
         //2.判断人数
         if (orderSetting.getReservations()>=orderSetting.getNumber()){
             return new Result(false,MessageConstant.ORDER_FULL);
@@ -111,7 +115,11 @@ public class OrderServiceImpl implements OrderService {
 
         //6.修改预约设置的已预约人数
         orderSetting.setReservations(orderSetting.getReservations()+1);
-        orderSettingDao.editReservationsByOrderDate(orderSetting);
+        int count = orderSettingDao.editReservationsByOrderDate(orderSetting);
+        if (1 != count){
+            //修改失败
+            throw  new OrderException("预约冲突");
+        }
         return new Result(true,MessageConstant.ORDER_SUCCESS);
     }
 }

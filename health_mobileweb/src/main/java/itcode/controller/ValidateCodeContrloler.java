@@ -32,4 +32,16 @@ public class ValidateCodeContrloler {
         jedis.setex(telephone+RedisMessageConstant.SENDTYPE_ORDER,60*100,String.valueOf(code));
         return new Result(true, MessageConstant.SEND_VALIDATECODE_SUCCESS);
     }
+
+    @RequestMapping("send4Login")
+    public Result send4Login(String telephone){
+        //生成验证码
+        Integer code = ValidateCodeUtils.generateValidateCode(4);
+        //发送验证码
+        JuheSmsUtil.sendCode(telephone,String.valueOf(code));
+        //保存到redis,提交时验证
+        Jedis jedis = jedisPool.getResource();
+        jedis.setex(telephone+RedisMessageConstant.SENDTYPE_LOGIN,60*100,String.valueOf(code));
+        return new Result(true, MessageConstant.SEND_VALIDATECODE_SUCCESS);
+    }
 }
